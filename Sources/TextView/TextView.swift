@@ -43,7 +43,6 @@ public struct TextView: View {
 		private let textVerticalPadding: CGFloat
 		private let font: UIFont
 		private let textColor: UIColor
-		private let backgroundColor: UIColor
 		private let returnType: UIReturnKeyType
 		private let contentType: ContentType?
 		private let autocorrection: Autocorrection
@@ -64,7 +63,6 @@ public struct TextView: View {
 			textVerticalPadding: CGFloat,
 			font: UIFont,
 			textColor: UIColor,
-			backgroundColor: UIColor,
 			returnType: UIReturnKeyType,
 			contentType: ContentType?,
 			autocorrection: Autocorrection,
@@ -85,7 +83,6 @@ public struct TextView: View {
 			self.textVerticalPadding = textVerticalPadding
 			self.font = font
 			self.textColor = textColor
-			self.backgroundColor = backgroundColor
 			self.returnType = returnType
 			self.contentType = contentType
 			self.autocorrection = autocorrection
@@ -122,11 +119,12 @@ public struct TextView: View {
 					)
 					: oldSelectedRange
 			}
+
+            textView.backgroundColor = nil
 			
 			textView.textAlignment = textAlignment
 			textView.font = font
 			textView.textColor = textColor
-			textView.backgroundColor = backgroundColor
 			textView.returnKeyType = returnType
 			textView.textContentType = contentType
 			textView.autocorrectionType = autocorrection
@@ -252,7 +250,6 @@ public struct TextView: View {
 			textVerticalPadding: textVerticalPadding,
 			font: font,
 			textColor: textColor,
-			backgroundColor: backgroundColor,
 			returnType: returnType,
 			contentType: contentType,
 			autocorrection: autocorrection,
@@ -270,7 +267,6 @@ public struct TextView: View {
 	public var body: some View {
 		GeometryReader { geometry in
 			ZStack {
-				self.representable
 				self._placeholder.map { placeholder in
 					Text(placeholder)
 						.font(.init(self.font))
@@ -286,7 +282,9 @@ public struct TextView: View {
 							self.isEditing = true
 						}
 				}
-			}
+                self.representable
+            }
+            .background(Color(backgroundColor))
 		}
 	}
 }
