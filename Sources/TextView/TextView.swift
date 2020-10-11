@@ -47,6 +47,7 @@ public struct TextView: View {
 		private let contentType: ContentType?
 		private let autocorrection: Autocorrection
 		private let autocapitalization: Autocapitalization
+        private let keyboardDismissMode: UIScrollView.KeyboardDismissMode
 		private let isSecure: Bool
 		private let isEditable: Bool
 		private let isSelectable: Bool
@@ -67,6 +68,7 @@ public struct TextView: View {
 			contentType: ContentType?,
 			autocorrection: Autocorrection,
 			autocapitalization: Autocapitalization,
+            keyboardDismissMode: UIScrollView.KeyboardDismissMode,
 			isSecure: Bool,
 			isEditable: Bool,
 			isSelectable: Bool,
@@ -87,6 +89,7 @@ public struct TextView: View {
 			self.contentType = contentType
 			self.autocorrection = autocorrection
 			self.autocapitalization = autocapitalization
+            self.keyboardDismissMode = keyboardDismissMode
 			self.isSecure = isSecure
 			self.isEditable = isEditable
 			self.isSelectable = isSelectable
@@ -129,6 +132,7 @@ public struct TextView: View {
 			textView.textContentType = contentType
 			textView.autocorrectionType = autocorrection
 			textView.autocapitalizationType = autocapitalization
+            textView.keyboardDismissMode = keyboardDismissMode
 			textView.isSecureTextEntry = isSecure
 			textView.isEditable = isEditable
 			textView.isSelectable = isSelectable
@@ -176,6 +180,7 @@ public struct TextView: View {
 	private let contentType: ContentType?
 	private let autocorrection: Autocorrection
 	private let autocapitalization: Autocapitalization
+    private let keyboardDismissMode: UIScrollView.KeyboardDismissMode
 	private let isSecure: Bool
 	private let isEditable: Bool
 	private let isSelectable: Bool
@@ -202,6 +207,7 @@ public struct TextView: View {
 		contentType: ContentType? = nil,
 		autocorrection: Autocorrection = .default,
 		autocapitalization: Autocapitalization = .sentences,
+        keyboardDismissMode: UIScrollView.KeyboardDismissMode = .none,
 		isSecure: Bool = false,
 		isEditable: Bool = true,
 		isSelectable: Bool = true,
@@ -228,6 +234,7 @@ public struct TextView: View {
 		self.contentType = contentType
 		self.autocorrection = autocorrection
 		self.autocapitalization = autocapitalization
+        self.keyboardDismissMode = keyboardDismissMode
 		self.isSecure = isSecure
 		self.isEditable = isEditable
 		self.isSelectable = isSelectable
@@ -254,6 +261,7 @@ public struct TextView: View {
 			contentType: contentType,
 			autocorrection: autocorrection,
 			autocapitalization: autocapitalization,
+            keyboardDismissMode: keyboardDismissMode,
 			isSecure: isSecure,
 			isEditable: isEditable,
 			isSelectable: isSelectable,
