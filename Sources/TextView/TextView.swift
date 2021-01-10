@@ -43,16 +43,18 @@ public struct TextView: View {
 		private let textVerticalPadding: CGFloat
 		private let font: UIFont
 		private let textColor: UIColor
+		private let backgroundColor: UIColor
 		private let returnType: UIReturnKeyType
 		private let contentType: ContentType?
 		private let autocorrection: Autocorrection
 		private let autocapitalization: Autocapitalization
-        private let keyboardDismissMode: UIScrollView.KeyboardDismissMode
+		private let keyboardDismissMode: UIScrollView.KeyboardDismissMode
 		private let isSecure: Bool
 		private let isEditable: Bool
 		private let isSelectable: Bool
 		private let isScrollingEnabled: Bool
 		private let isUserInteractionEnabled: Bool
+		private let isDoneAccessoryEnabled: Bool
 		private let shouldWaitUntilCommit: Bool
 		private let shouldChange: ShouldChangeHandler?
 		
@@ -64,16 +66,18 @@ public struct TextView: View {
 			textVerticalPadding: CGFloat,
 			font: UIFont,
 			textColor: UIColor,
+			backgroundColor: UIColor,
 			returnType: UIReturnKeyType,
 			contentType: ContentType?,
 			autocorrection: Autocorrection,
 			autocapitalization: Autocapitalization,
-            keyboardDismissMode: UIScrollView.KeyboardDismissMode,
+			keyboardDismissMode: UIScrollView.KeyboardDismissMode,
 			isSecure: Bool,
 			isEditable: Bool,
 			isSelectable: Bool,
 			isScrollingEnabled: Bool,
 			isUserInteractionEnabled: Bool,
+            isDoneAccessoryEnabled: Bool,
 			shouldWaitUntilCommit: Bool,
 			shouldChange: ShouldChangeHandler? = nil
 		) {
@@ -85,16 +89,18 @@ public struct TextView: View {
 			self.textVerticalPadding = textVerticalPadding
 			self.font = font
 			self.textColor = textColor
+			self.backgroundColor = backgroundColor
 			self.returnType = returnType
 			self.contentType = contentType
 			self.autocorrection = autocorrection
 			self.autocapitalization = autocapitalization
-            self.keyboardDismissMode = keyboardDismissMode
+			self.keyboardDismissMode = keyboardDismissMode
 			self.isSecure = isSecure
 			self.isEditable = isEditable
 			self.isSelectable = isSelectable
 			self.isScrollingEnabled = isScrollingEnabled
 			self.isUserInteractionEnabled = isUserInteractionEnabled
+			self.isDoneAccessoryEnabled = isDoneAccessoryEnabled
 			self.shouldWaitUntilCommit = shouldWaitUntilCommit
 			self.shouldChange = shouldChange
 		}
@@ -122,17 +128,16 @@ public struct TextView: View {
 					)
 					: oldSelectedRange
 			}
-
-            textView.backgroundColor = nil
 			
 			textView.textAlignment = textAlignment
 			textView.font = font
 			textView.textColor = textColor
+			textView.backgroundColor = backgroundColor
 			textView.returnKeyType = returnType
 			textView.textContentType = contentType
 			textView.autocorrectionType = autocorrection
 			textView.autocapitalizationType = autocapitalization
-            textView.keyboardDismissMode = keyboardDismissMode
+			textView.keyboardDismissMode = keyboardDismissMode
 			textView.isSecureTextEntry = isSecure
 			textView.isEditable = isEditable
 			textView.isSelectable = isSelectable
@@ -145,6 +150,18 @@ public struct TextView: View {
 				bottom: textVerticalPadding,
 				right: textHorizontalPadding
 			)
+                        
+            if isDoneAccessoryEnabled {
+                let toolbar: UIToolbar = UIToolbar(frame: CGRect.zero)
+                let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+                let doneButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: textView, action: #selector(textView.resignFirstResponder))
+                doneButton.tintColor = textView.window?.tintColor
+                toolbar.items = [flexibleSpace, doneButton]
+                toolbar.sizeToFit()
+                textView.inputAccessoryView = toolbar
+            } else {
+                textView.inputAccessoryView = nil
+            }
 			
 			DispatchQueue.main.async {
 				_ = self.isEditing
@@ -180,12 +197,13 @@ public struct TextView: View {
 	private let contentType: ContentType?
 	private let autocorrection: Autocorrection
 	private let autocapitalization: Autocapitalization
-    private let keyboardDismissMode: UIScrollView.KeyboardDismissMode
+	private let keyboardDismissMode: UIScrollView.KeyboardDismissMode
 	private let isSecure: Bool
 	private let isEditable: Bool
 	private let isSelectable: Bool
 	private let isScrollingEnabled: Bool
 	private let isUserInteractionEnabled: Bool
+    private let isDoneAccessoryEnabled: Bool
 	private let shouldWaitUntilCommit: Bool
 	private let shouldChange: ShouldChangeHandler?
 	
@@ -207,12 +225,13 @@ public struct TextView: View {
 		contentType: ContentType? = nil,
 		autocorrection: Autocorrection = .default,
 		autocapitalization: Autocapitalization = .sentences,
-        keyboardDismissMode: UIScrollView.KeyboardDismissMode = .none,
+		keyboardDismissMode: UIScrollView.KeyboardDismissMode = .none,
 		isSecure: Bool = false,
 		isEditable: Bool = true,
 		isSelectable: Bool = true,
 		isScrollingEnabled: Bool = true,
 		isUserInteractionEnabled: Bool = true,
+		isDoneAccessoryEnabled: Bool = false,
 		shouldWaitUntilCommit: Bool = true,
 		shouldChange: ShouldChangeHandler? = nil
 	) {
@@ -234,12 +253,13 @@ public struct TextView: View {
 		self.contentType = contentType
 		self.autocorrection = autocorrection
 		self.autocapitalization = autocapitalization
-        self.keyboardDismissMode = keyboardDismissMode
+		self.keyboardDismissMode = keyboardDismissMode
 		self.isSecure = isSecure
 		self.isEditable = isEditable
 		self.isSelectable = isSelectable
 		self.isScrollingEnabled = isScrollingEnabled
 		self.isUserInteractionEnabled = isUserInteractionEnabled
+        self.isDoneAccessoryEnabled = isDoneAccessoryEnabled
 		self.shouldWaitUntilCommit = shouldWaitUntilCommit
 		self.shouldChange = shouldChange
 	}
@@ -257,16 +277,18 @@ public struct TextView: View {
 			textVerticalPadding: textVerticalPadding,
 			font: font,
 			textColor: textColor,
+			backgroundColor: backgroundColor,
 			returnType: returnType,
 			contentType: contentType,
 			autocorrection: autocorrection,
 			autocapitalization: autocapitalization,
-            keyboardDismissMode: keyboardDismissMode,
+			keyboardDismissMode: keyboardDismissMode,
 			isSecure: isSecure,
 			isEditable: isEditable,
 			isSelectable: isSelectable,
 			isScrollingEnabled: isScrollingEnabled,
 			isUserInteractionEnabled: isUserInteractionEnabled,
+			isDoneAccessoryEnabled: isDoneAccessoryEnabled,
 			shouldWaitUntilCommit: shouldWaitUntilCommit,
 			shouldChange: shouldChange
 		)
@@ -275,6 +297,7 @@ public struct TextView: View {
 	public var body: some View {
 		GeometryReader { geometry in
 			ZStack {
+				self.representable
 				self._placeholder.map { placeholder in
 					Text(placeholder)
 						.font(.init(self.font))
@@ -290,9 +313,7 @@ public struct TextView: View {
 							self.isEditing = true
 						}
 				}
-                self.representable
-            }
-            .background(Color(backgroundColor))
+			}
 		}
 	}
 }
